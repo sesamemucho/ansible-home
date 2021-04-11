@@ -2,16 +2,13 @@
 - name: Install packages for a basic machine with X
   package:
     name:
-      - chromium
+      - firefox
       - cups
-      - hplip
       - libu2f-host
-      - ratpoison
+      - i3
       - rxvt-unicode
       - rxvt-unicode-terminfo
-      - xlockmore
       - xorg
-      - xterm
 - name: Enable the cups-browsed service
   systemd:
     daemon_reload: yes

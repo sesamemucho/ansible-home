@@ -1,43 +1,5 @@
 all:
   children:
-    afp:
-      hosts:
-        timemachine.localdomain:
-    basicx:
-      hosts:
-        caduceus.localdomain:
-        haggard.localdomain:
-        # lefty.localdomain:
-        lemmy.localdomain:
-        philthy.localdomain:
-        volver.localdomain:
-    dev:
-      hosts:
-        haggard.localdomain:
-        # lefty.localdomain:
-        lemmy.localdomain:
-        philthy.localdomain:
-    hfs:
-      hosts:
-        timemachine.localdomain:
     home:
       hosts:
-        caduceus.localdomain:
-        dickens.localdomain:
-        haggard.localdomain:
-        # lefty.localdomain:
-        timemachine.localdomain:
-        volver.localdomain:
-    cisa:
-      hosts:
-        lemmy.localdomain:
-        philthy.localdomain:
-    permanent:
-      hosts:
-        dickens.localdomain:
-        haggard.localdomain:
-        timemachine.localdomain:
-    xfce4:
-      hosts:
-        caduceus.localdomain:
-        volver.localdomain:
+        michiba.local:

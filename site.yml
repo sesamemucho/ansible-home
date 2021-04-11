@@ -1,117 +1,127 @@
 ---
 - hosts: all
-  tasks:
-    - name: Group hosts by OS family
-      group_by:
-        key: os_family_{{ ansible_facts['os_family'] }}
-- hosts: os_family_Debian
-  tasks:
-    - name: Install aptitude
-      package:
-        name:
-          - aptitude
-- hosts: all
-  roles:
-    - dotfiles
-    - pyenv
-    - ufw
-    - wireless
-  tasks:
-    - name: Configure dhcpcd
-      block:
-        - name: Send our hostname to the DHCP server
-          lineinfile:
-            backrefs: yes
-            line: hostname
-            path: /etc/dhcpcd.conf
-            regexp: "^#hostname$"
-        - name: Get NTP servers from the DHCP server
-          lineinfile:
-            backrefs: yes
-            line: option ntp_servers
-            path: /etc/dhcpcd.conf
-            regexp: "^#option ntp_servers$"
-    - name: Turn on NTP
-      command: /usr/bin/timedatectl set-ntp true
-- hosts: afp
-  roles:
-    - afp
-- hosts: basicx
-  roles:
-    - audio
-    - fonts
-    - x-basic
-    - xdm
-- hosts: dev
   roles:
     - dev
-- hosts: hfs
-  roles:
-    - hfs
-- hosts: cisa
-  roles:
-    - dotfiles-cisa
-    - piv
-- hosts: cisa:&basicx
-  roles:
-    - feh-cisa
-- hosts: home
-  roles:
-    - dotfiles-home
-- hosts: home:&basicx
-  roles:
-    - feh-home
-- hosts: permanent
-  roles:
-    - prometheus-node-exporter
-- hosts: dickens
+    - fonts
+    - ufw
+    - x-basic
   tasks:
-    - name: Install apcupsd
-      package:
-        name:
-          - apcupsd
-- hosts: timemachine
-  tasks:
-    - name: Setup external drive
-      block:
-        - name: Create a timemachine group
-          group:
-            name: timemachine
-        - name: Create the mount point
-          file:
-            path: /mnt/my_book
-            owner: root
-            group: timemachine
-            mode: 0770
-            state: directory
-        - name: Create fstab entry for external drive
-          mount:
-            path: /mnt/my_book
-            src: UUID=b2e5b378-15f6-3322-9213-df3fcc558ca6
-            fstype: hfsplus
-            opts: defaults,nodev,noexec,nosuid,gid=timemachine
-            state: mounted
-      tags:
-        - timemachine
-    - name: Configure netatalk/afpd
-      blockinfile:
-        path: /etc/netatalk/afp.conf
-        block: |
-          [Time Machine Volume]
-          path = /mnt/my_book
-          time machine = yes
-      notify:
-        - Restart netatalk
-      tags:
-        - afp
-  handlers:
-    - name: Restart netatalk
-      service:
-        name: netatalk
-        state: restarted
-- hosts: xfce4
-  tasks:
-    - name: Install xfce4
-      package:
-        name:
-          - xfce4
+    - name: Turn on NTP
+      command: /usr/bin/timedatectl set-ntp true
+
+# - hosts: all
+#   tasks:
+#     - name: Group hosts by OS family
+#       group_by:
+#         key: os_family_{{ ansible_facts['os_family'] }}
+# - hosts: os_family_Debian
+#   tasks:
+#     - name: Install aptitude
+#       package:
+#         name:
+#           - aptitude
+# - hosts: all
+#   roles:
+#     - dotfiles
+#     - pyenv
+#     - ufw
+#     - wireless
+#   tasks:
+#     - name: Configure dhcpcd
+#       block:
+#         - name: Send our hostname to the DHCP server
+#           lineinfile:
+#             backrefs: yes
+#             line: hostname
+#             path: /etc/dhcpcd.conf
+#             regexp: "^#hostname$"
+#         - name: Get NTP servers from the DHCP server
+#           lineinfile:
+#             backrefs: yes
+#             line: option ntp_servers
+#             path: /etc/dhcpcd.conf
+#             regexp: "^#option ntp_servers$"
+#     - name: Turn on NTP
+#       command: /usr/bin/timedatectl set-ntp true
+# - hosts: afp
+#   roles:
+#     - afp
+# - hosts: basicx
+#   roles:
+#     - audio
+#     - fonts
+#     - x-basic
+#     - xdm
+# - hosts: dev
+#   roles:
+#     - dev
+# - hosts: hfs
+#   roles:
+#     - hfs
+# - hosts: cisa
+#   roles:
+#     - dotfiles-cisa
+#     - piv
+# - hosts: cisa:&basicx
+#   roles:
+#     - feh-cisa
+# - hosts: home
+#   roles:
+#     - dotfiles-home
+# - hosts: home:&basicx
+#   roles:
+#     - feh-home
+# - hosts: permanent
+#   roles:
+#     - prometheus-node-exporter
+# - hosts: dickens
+#   tasks:
+#     - name: Install apcupsd
+#       package:
+#         name:
+#           - apcupsd
+# - hosts: timemachine
+#   tasks:
+#     - name: Setup external drive
+#       block:
+#         - name: Create a timemachine group
+#           group:
+#             name: timemachine
+#         - name: Create the mount point
+#           file:
+#             path: /mnt/my_book
+#             owner: root
+#             group: timemachine
+#             mode: 0770
+#             state: directory
+#         - name: Create fstab entry for external drive
+#           mount:
+#             path: /mnt/my_book
+#             src: UUID=b2e5b378-15f6-3322-9213-df3fcc558ca6
+#             fstype: hfsplus
+#             opts: defaults,nodev,noexec,nosuid,gid=timemachine
+#             state: mounted
+#       tags:
+#         - timemachine
+#     - name: Configure netatalk/afpd
+#       blockinfile:
+#         path: /etc/netatalk/afp.conf
+#         block: |
+#           [Time Machine Volume]
+#           path = /mnt/my_book
+#           time machine = yes
+#       notify:
+#         - Restart netatalk
+#       tags:
+#         - afp
+#   handlers:
+#     - name: Restart netatalk
+#       service:
+#         name: netatalk
+#         state: restarted
+# - hosts: xfce4
+#   tasks:
+#     - name: Install xfce4
+#       package:
+#         name:
+#           - xfce4

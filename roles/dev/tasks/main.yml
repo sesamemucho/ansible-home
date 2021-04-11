@@ -10,6 +10,4 @@
       - gnupg
       - ispell
       - mlocate
-      - screen
-      - source-highlight
-      - terraform
+      - tmux
