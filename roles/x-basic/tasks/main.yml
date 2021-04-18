@@ -2,13 +2,21 @@
 - name: Install packages for a basic machine with X
   package:
     name:
+      - dmenu
+      - chromium
       - firefox
       - cups
-      - libu2f-host
-      - i3
+      - i3-wm
+      - i3blocks
+      - i3lock
+      - i3status
       - rxvt-unicode
       - rxvt-unicode-terminfo
       - xorg
+      - xorg-xinit
+  tags:
+    - x-basic
+
 - name: Enable the cups-browsed service
   systemd:
     daemon_reload: yes

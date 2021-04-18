@@ -8,5 +8,6 @@
       - terminus-font
       - ttf-bitstream-vera
       - ttf-inconsolata
+      - ttf-fira-code
   tags:
     - fonts

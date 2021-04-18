@@ -1,0 +1,43 @@
+---
+- name: Install yadm dotfile manager
+
+  block:
+    - name: Check out from git
+      ansible.builtin.git:
+        repo: https://github.com/TheLocehiliosan/yadm.git
+        dest: /home/bob/Projects/readonly-repos/yadm
+        force: yes
+
+    - name: Set repo owner
+      ansible.builtin.file:
+        path: /home/bob/Projects/readonly-repos/yadm
+
+    - name: Make symlink to yadm executable
+      ansible.builtin.file:
+        src: /home/bob/Projects/readonly-repos/yadm/yadm
+        dest: /usr/local/bin/yadm
+        state: link
+      become_user: root
+
+    - name: Clone dofiles repo
+      ansible.builtin.command:
+        cmd: yadm clone https://github.com/sesamemucho/yadm-configs
+        creates: /home/bob/.local/share/yadm/repo.git
+
+  become: true
+  become_user: bob
+
+  tags:
+    dotfiles
+
+- name: Install emacs dotfiles
+  ansible.builtin.git:
+    repo: https://github.com/sesamemucho/emacs-init
+    dest: /home/bob/.emacs.d
+
+  become: true
+  become_user: bob
+
+  tags:
+    dotfiles
+

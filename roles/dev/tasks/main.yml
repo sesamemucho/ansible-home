@@ -1,13 +1,112 @@
+
 ---
-- name: Install dev packages
-  package:
-    name:
-      - ansible
-      - base-devel
-      - bash-completion
-      - bind-tools
-      - emacs
-      - gnupg
-      - ispell
-      - mlocate
-      - tmux
+- name: Dev setup
+  block:
+    - name: Install dev packages
+      community.general.pacman:
+        name:
+          - autoconf
+          - automake
+          - binutils
+          - bison
+          - fakeroot
+          - file
+          - findutils
+          - flex
+          - gawk
+          - gcc
+          - gettext
+          - grep
+          - groff
+          - gzip
+          - libtool
+          - m4
+          - make
+          - pacman
+          - patch
+          - pkgconf
+          - sed
+          - sudo
+          - texinfo
+          - which
+          - bash-completion
+          - bind-tools
+          - emacs
+          - gnupg
+          - ispell
+          - mlocate
+          - tmux
+          - syncthing
+          - ansible-lint
+
+    - name: Set git global configs
+      block:
+        - name: Set git user email
+          community.general.git_config:
+            name: user.email
+            scope: global
+            value: 'rforgey@grumpydogconsulting.com'
+          register: gubber
+
+        - name: debug
+          ansible.builtin.debug:
+            msg: 'return value is {{ gubber }}'
+
+        - name: Set git user name
+          community.general.git_config:
+            name: user.name
+            scope: global
+            value: 'Bob Forgey'
+
+      become: true
+      become_user: bob
+
+    - name: Start with AUR
+      block:
+        - name: Make ansible custom-module directory
+          ansible.builtin.file:
+            path: /home/bob/.ansible/plugins/modules
+            state: directory
+            owner: bob
+            group: bob
+
+        - name: get aur helper
+          ansible.builtin.git:
+            repo: https://github.com/kewlfft/ansible-aur.git
+            dest: /home/bob/.ansible/plugins/modules/aur
+
+        - name: Make AUR build user
+          ansible.builtin.user:
+            name: aur_builder
+            create_home: yes
+            group: wheel
+          become_user: root
+
+        - name: Set up remote_tmp dir
+          ansible.builtin.file:
+            path: /home/aur_builder/.ansible/tmp
+            owner: aur_builder
+            group: wheel
+            mode: 0777
+          become_user: root
+
+        - name: sudo for aur_builder
+          ansible.builtin.lineinfile:
+            path: /etc/sudoers.d/11-install-aur-builder
+            line: 'aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman'
+            create: yes
+            validate: 'visudo -cf %s'
+          become_user: root
+
+      become: true
+      become_user: bob
+
+    - name: get yay
+      aur:
+        use: makepkg
+        name: yay
+      become_user: aur_builder
+
+  tags:
+    - dev
+ 

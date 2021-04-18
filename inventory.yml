@@ -1,5 +1,6 @@
-all:
-  children:
-    home:
-      hosts:
-        michiba.local:
+---
+home:
+  hosts:
+    localhost:
+      vars:
+        ansible_connection: local

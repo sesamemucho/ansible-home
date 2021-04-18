@@ -1,0 +1,11 @@
+---
+# If things in this role seem to fit in another category, they should
+# be moved there.
+
+- name: Install various packages
+  package:
+    name:
+      - htop
+
+  tags:
+    - uncat

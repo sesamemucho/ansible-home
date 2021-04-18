@@ -1,13 +1,23 @@
 ---
 - hosts: all
+  connection: local
+  become: yes
   roles:
     - dev
     - fonts
     - ufw
     - x-basic
+    - dotfiles
+    - uncategorized
   tasks:
+    - name: check NTP synchronization
+      command: timedatectl show
+      register: ntp_sync
+      changed_when: False
+
     - name: Turn on NTP
       command: /usr/bin/timedatectl set-ntp true
+      when: "'NTPSynchronized=yes' not in ntp_sync.stdout"
 
 # - hosts: all
 #   tasks:

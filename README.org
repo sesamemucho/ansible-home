@@ -1,12 +1,14 @@
-# ansible-home #
+* ansible-home
+
+Forked from [jsf9k/ansible-arch-install][https://github.com/jsf9k/ansible-arch-install]
 
 Ansible code to configure and maintain my home network.  The code here
 assumes that all devices have been installed via
-[jsf9k/ansible-arch-install](https://github.com/jsf9k/ansible-arch-install)
+[sesamemucho/ansible-arch-install](https://github.com/sesamemucho/ansible-arch-install)
 or
 [jsf9k/ansible-raspi-install](https://github.com/jsf9k/ansible-raspi-install).
 
-## Usage ##
+** Usage
 
 Populate `inventory.yml` and run `site.yml`:
 
@@ -18,3 +20,7 @@ To update all packages, run `update.yml`:
 ```console
 ansible-playbook -i inventory.yml update.yml
 ```
+
+** After first install
+
+- Go through and update/add yadm ## tags.
