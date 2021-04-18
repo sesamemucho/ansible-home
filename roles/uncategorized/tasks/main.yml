@@ -9,3 +9,56 @@
 
   tags:
     - uncat
+
+# - name: keyring support
+#   block:
+#     - name: Install keyring packages
+#       package:
+#         name:
+#           - gnome-keyring
+#           - libsecret
+#           - seahorse
+
+#     # # See https://wiki.archlinux.org/index.php/GNOME/Keyring
+#     # - name: Add keyring to PAM part 1
+#     #   community.general.pamd:
+#     #     name: login
+#     #     type: auth
+#     #     control: optional
+#     #     module_path: pam_gnome_keyring.so
+#     #     state: absent
+
+#     # - name: Add keyring to PAM part 2
+#     #   community.general.pamd:
+#     #     name: login
+#     #     type: session
+#     #     control: optional
+#     #     module_path: pam_gnome_keyring.so
+#         # state: absent
+
+#     # See https://wiki.archlinux.org/index.php/GNOME/Keyring
+#     - name: Add keyring to PAM part 1
+#       community.general.pamd:
+#         name: login
+#         type: auth
+#         control: include
+#         module_path: system-local-login
+#         new_type: auth
+#         new_control: optional
+#         new_module_path: pam_gnome_keyring.so
+#         state: after
+
+#     - name: Add keyring to PAM part 2
+#       community.general.pamd:
+#         name: login
+#         type: session
+#         control: include
+#         module_path: system-local-login
+#         new_type: session
+#         new_control: optional
+#         new_module_path: pam_gnome_keyring.so
+#     #     state: after
+
+#   tags:
+#     - keyring
+

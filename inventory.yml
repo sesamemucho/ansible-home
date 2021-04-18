@@ -1,5 +1,9 @@
 ---
 home:
+  vars:
+    # Get rid of interpreter discovery warning
+    ansible_python_interpreter: /usr/bin/python
+
   hosts:
     localhost:
       vars:
