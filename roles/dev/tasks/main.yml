@@ -82,9 +82,10 @@
         - name: Set up remote_tmp dir
           ansible.builtin.file:
             path: /home/aur_builder/.ansible/tmp
+            state: directory
             owner: aur_builder
             group: wheel
-            mode: 0777
+            mode: 0755
           become_user: root
 
         - name: sudo for aur_builder
