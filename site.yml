@@ -6,8 +6,9 @@
     - dev
     - fonts
     - ufw
-    - x-basic
     - dotfiles
+    - x-basic
+    - customizable
     - uncategorized
   tasks:
     - name: check NTP synchronization

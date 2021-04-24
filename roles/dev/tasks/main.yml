@@ -31,12 +31,9 @@
           - which
           - bash-completion
           - bind-tools
-          - emacs
           - gnupg
           - ispell
           - mlocate
-          - tmux
-          - syncthing
           - ansible-lint
 
     - name: Set git global configs

@@ -1,0 +1,14 @@
+
+---
+- name: Customizable setup
+  block:
+    - name: Install things that may have customized dotfiles
+      community.general.pacman:
+        name:
+          - emacs
+          - tmux
+          - syncthing
+
+  tags:
+    - customizable
+ 
