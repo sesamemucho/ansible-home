@@ -1,0 +1,7 @@
+---
+# AUR and everything that needs it should go here.
+- hosts: all
+  connection: local
+  become: yes
+  roles:
+    - aur

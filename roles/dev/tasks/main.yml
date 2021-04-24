@@ -98,12 +98,6 @@
       become: true
       become_user: bob
 
-    - name: get yay
-      aur:
-        use: makepkg
-        name: yay
-      become_user: aur_builder
-
   tags:
     - dev
  
