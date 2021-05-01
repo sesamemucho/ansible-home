@@ -8,6 +8,7 @@
     - ufw
     - dotfiles
     - x-basic
+    - audio
     - customizable
     - uncategorized
   tasks:

@@ -6,9 +6,13 @@
   package:
     name:
       - htop
+      - evince
+      - gnome-keyring
+      - seahorse
 
   tags:
     - uncat
+
 
 # - name: keyring support
 #   block:

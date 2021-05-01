@@ -8,7 +8,9 @@
           - emacs
           - tmux
           - syncthing
+          - unison
 
   tags:
     - customizable
+    - update
  

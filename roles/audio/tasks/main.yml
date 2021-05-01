@@ -1,0 +1,13 @@
+---
+- name: Install packages for audio
+  package:
+    name:
+      - alsa-utils
+      - pipewire
+      - pipewire-alsa
+      - pipewire-docs
+      - mplayer
+      - audacity
+
+  tags:
+    - audio

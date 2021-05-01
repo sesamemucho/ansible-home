@@ -16,6 +16,7 @@
       - xorg-xinit
   tags:
     - x-basic
+    - update
 
 - name: Enable the cups-browsed service
   systemd:

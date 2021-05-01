@@ -1,41 +1,47 @@
 
 ---
+- name: Install dev packages
+  community.general.pacman:
+    name:
+      - autoconf
+      - automake
+      - binutils
+      - bison
+      - fakeroot
+      - file
+      - findutils
+      - flex
+      - gawk
+      - gcc
+      - gettext
+      - grep
+      - groff
+      - gzip
+      - libtool
+      - m4
+      - make
+      - pacman
+      - patch
+      - pkgconf
+      - sed
+      - sudo
+      - texinfo
+      - which
+      - bash-completion
+      - bind-tools
+      - gnupg
+      - ispell
+      - mlocate
+      - ansible-lint
+      - lastpass-cli
+
+  become: true
+  tags:
+    - dev
+    - update
+
 - name: Dev setup
   block:
-    - name: Install dev packages
-      community.general.pacman:
-        name:
-          - autoconf
-          - automake
-          - binutils
-          - bison
-          - fakeroot
-          - file
-          - findutils
-          - flex
-          - gawk
-          - gcc
-          - gettext
-          - grep
-          - groff
-          - gzip
-          - libtool
-          - m4
-          - make
-          - pacman
-          - patch
-          - pkgconf
-          - sed
-          - sudo
-          - texinfo
-          - which
-          - bash-completion
-          - bind-tools
-          - gnupg
-          - ispell
-          - mlocate
-          - ansible-lint
-
     - name: Set git global configs
       block:
         - name: Set git user email

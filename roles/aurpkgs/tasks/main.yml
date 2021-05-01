@@ -1,0 +1,14 @@
+
+---
+- name: AUR packages
+  block:
+    - name: get aur packages
+      aur:
+        use: makepkg
+        name:
+          - oscar-git
+      become_user: aur_builder
+
+  tags:
+    - aurpkgs
+ 
