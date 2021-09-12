@@ -5,7 +5,7 @@
   roles:
     - dev
     - fonts
-    - ufw
+    - firewalld
     - dotfiles
     - x-basic
     - audio

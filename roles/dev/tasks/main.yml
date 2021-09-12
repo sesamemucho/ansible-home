@@ -1,4 +1,3 @@
-
 ---
 - name: Install dev packages
   community.general.pacman:
@@ -34,11 +33,63 @@
       - mlocate
       - ansible-lint
       - lastpass-cli
+      - python2
+      - python
+      - eog
+      - python-pipx
+      - python-pipenv
+    extra_args: --noconfirm
 
   become: true
   tags:
     - dev
     - update
+
+- name: Python setup
+  block:
+    - name: Set up pipx
+      command: python3 -m pipx ensurepath
+
+    # - name: Install Pypi packages that are not in Arch
+    #   pip:
+    #     name: some-pip-package
+
+  become: true
+  tags:
+    - dev
+    - python
+
+- name: VM setup
+  block:
+    - name: Install dev packages
+      community.general.pacman:
+        name:
+          - vagrant
+          - virt-manager
+          - qemu
+        extra_args: --noconfirm
+
+    - name: Enable service libvirt
+      ansible.builtin.systemd:
+        name: libvirtd
+        enabled: yes
+        state: started
+
+    - name: Add user to libvirt-controlling group
+      ansible.builtin.user:
+        name: '{{ user_name }}'
+        groups: kvm
+        append: yes
+
+    - name: Set up libvirt authorization
+      ansible.builtin.copy:
+        src: 50-libvirt.rules
+        dest: /etc/polkit-1/rules.d/50-libvirt.rules
+
+  become: true
+  tags:
+    - dev
+    - vm
 
 - name: Dev setup
   block:

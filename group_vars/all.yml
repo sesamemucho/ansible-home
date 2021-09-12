@@ -1,3 +1,4 @@
 ---
 ansible_become: yes
 ansible_ssh_common_args: -o "StrictHostKeyChecking no" -o "UserKnownHostsFile /dev/null"
+user_name: "{{ lookup('file', 'user_name.txt') }}"

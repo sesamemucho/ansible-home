@@ -3,16 +3,33 @@
 # category, they should be moved there.
 
 - name: Install various packages
-  package:
+  community.general.pacman:
     name:
       - htop
       - evince
       - gnome-keyring
       - seahorse
+      - transmission-gtk
+      - x11-ssh-askpass
+      - the_silver_searcher
+      - dnsmasq
+      - firewalld
+      - dmidecode
+      - ebtables
+      - libreoffice
+      - usbutils
+      - ledger
+      - cpio
+      - inetutils
+    extra_args: --noconfirm
 
   tags:
     - uncat
 
+- name: Make yubikey not give errors on plugin
+  ansible.builtin.copy:
+    src: options.conf
+    dest: /etc/modprobe.d/options.conf
 
 # - name: keyring support
 #   block:
