@@ -39,6 +39,7 @@
       - python-pipx
       - python-pipenv
     extra_args: --noconfirm
+    update_cache: yes
 
   become: true
   tags:
