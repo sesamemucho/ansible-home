@@ -62,7 +62,7 @@
 
 - name: VM setup
   block:
-    - name: Install dev packages
+    - name: Install dev packages for VM work
       community.general.pacman:
         name:
           - vagrant
