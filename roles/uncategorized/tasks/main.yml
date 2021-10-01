@@ -2,6 +2,17 @@
 # Put stuff here first. If things in this role seem to fit in another
 # category, they should be moved there.
 
+- name: Remove iptables for iptables-nft
+  community.general.pacman:
+    name:
+      - iptables
+    extra_args: --noconfirm
+    state: absent
+
+  become: true
+  tags:
+    - uncat
+
 - name: Install various packages
   community.general.pacman:
     name:
