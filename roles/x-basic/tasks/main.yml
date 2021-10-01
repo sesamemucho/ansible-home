@@ -14,6 +14,10 @@
       - rxvt-unicode-terminfo
       - xorg
       - xorg-xinit
+    extra_args: --noconfirm
+    update_cache: yes
+
+  become: true
   tags:
     - x-basic
     - update

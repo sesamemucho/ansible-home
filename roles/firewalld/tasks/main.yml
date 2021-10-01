@@ -5,6 +5,10 @@
       community.general.pacman:
         name:
           - firewalld
+        extra_args: --noconfirm
+        update_cache: yes
+
+      become: true
     - name: Enable and start the firewalld service
       ansible.builtin.systemd:
         name: firewalld

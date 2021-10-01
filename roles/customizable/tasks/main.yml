@@ -9,7 +9,10 @@
           - tmux
           - syncthing
           - unison
+        extra_args: --noconfirm
+        update_cache: yes
 
+      become: true
   tags:
     - customizable
     - update
