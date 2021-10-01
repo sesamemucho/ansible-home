@@ -24,7 +24,12 @@
         cmd: yadm clone https://github.com/sesamemucho/yadm-configs
         creates: /home/bob/.local/share/yadm/repo.git
 
-    - name: Activate yadm
+    - name: Activate yadm 1
+      ansible.builtin.command:
+        cmd: yadm restore --staged /home/bob
+        creates: /home/bob/.bash.d
+
+    - name: Activate yadm 2
       ansible.builtin.command:
         cmd: yadm restore /home/bob
         creates: /home/bob/.bash.d
