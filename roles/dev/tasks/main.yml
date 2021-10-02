@@ -126,9 +126,15 @@
             group: bob
 
         - name: get aur helper
-          ansible.builtin.git:
-            repo: https://github.com/kewlfft/ansible-aur.git
-            dest: /home/bob/.ansible/plugins/modules/aur
+          ansible.builtin.get_url:
+            url: https://raw.githubusercontent.com/kewlfft/ansible-aur/master/plugins/modules/aur.py
+            dest: /home/bob/.ansible/plugins/modules/aur/aur.py
+            mode: '0644'
+
+        # - name: get aur helper
+        #   ansible.builtin.git:
+        #     repo: https://github.com/kewlfft/ansible-aur.git
+        #     dest: /home/bob/.ansible/plugins/modules/aur
 
         - name: Make AUR build user
           ansible.builtin.user:

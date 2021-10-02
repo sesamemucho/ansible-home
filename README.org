@@ -21,6 +21,9 @@ To update all packages, run `update.yml`:
 ansible-playbook -i inventory.yml update.yml
 ```
 
+If you aren't in the United States, you may want to update the
+--country setting in roles/init/tasks/main.yml
+
 ** After first install
 
 - Go through and update/add yadm ## tags.

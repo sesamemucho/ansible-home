@@ -9,25 +9,23 @@
         update_cache: yes
 
     - name: filter the fastest mirrors that support HTTPS
-      shell: reflector --verbose --latest 10 --sort rate | awk -e '! /rsync/ {print}' > /etc/pacman.d/mirrorlist
+      shell: reflector --country "United States" --verbose --latest 10 --sort rate | awk -e '! /rsync/ {print}' > /etc/pacman.d/mirrorlist
   become: true
   tags:
     - mirrors
 
 - name: Start with updated system
-    community.general.pacman:
-      upgrade: yes
-      extra_args: --noconfirm
+  community.general.pacman:
+    upgrade: yes
+    extra_args: --noconfirm
   become: true
   tags:
     - init
 
+# Currently, the pacman module doesn't have the ability to deal with
+# package conflicts
 - name: Remove iptables for iptables-nft
-  community.general.pacman:
-    name:
-      - iptables-nft
-    force: yes
-    extra_args: --noconfirm
+  shell: yes | pacman -S iptables-nft
   become: true
   tags:
     - init
