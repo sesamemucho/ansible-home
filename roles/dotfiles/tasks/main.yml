@@ -5,16 +5,16 @@
     - name: Check out from git
       ansible.builtin.git:
         repo: https://github.com/TheLocehiliosan/yadm.git
-        dest: /home/bob/Projects/readonly-repos/yadm
+        dest: '{{ lookup("env", "HOME") }}/Projects/readonly-repos/yadm'
         force: yes
 
     - name: Set repo owner
       ansible.builtin.file:
-        path: /home/bob/Projects/readonly-repos/yadm
+        path: '{{ lookup("env", "HOME") }}/Projects/readonly-repos/yadm'
 
     - name: Make symlink to yadm executable
       ansible.builtin.file:
-        src: /home/bob/Projects/readonly-repos/yadm/yadm
+        src: '{{ lookup("env", "HOME") }}/Projects/readonly-repos/yadm/yadm'
         dest: /usr/local/bin/yadm
         state: link
       become_user: root
@@ -22,20 +22,20 @@
     - name: Clone dofiles repo
       ansible.builtin.command:
         cmd: yadm clone https://github.com/sesamemucho/yadm-configs
-        creates: /home/bob/.local/share/yadm/repo.git
+        creates: '{{ lookup("env", "HOME") }}/.local/share/yadm/repo.git'
 
     - name: Activate yadm 1
       ansible.builtin.command:
-        cmd: yadm restore --staged /home/bob
-        creates: /home/bob/.bash.d
+        cmd: yadm restore --staged '{{ lookup("env", "HOME") }}'
+        creates: '{{ lookup("env", "HOME") }}/.bash.d'
 
     - name: Activate yadm 2
       ansible.builtin.command:
-        cmd: yadm restore /home/bob
-        creates: /home/bob/.bash.d
+        cmd: yadm restore '{{ lookup("env", "HOME") }}'
+        creates: '{{ lookup("env", "HOME") }}/.bash.d'
 
   become: true
-  become_user: bob
+  become_user: '{{ lookup("env", "HOME") }}'
 
   tags:
     dotfiles
@@ -43,7 +43,7 @@
 - name: Install emacs dotfiles
   ansible.builtin.git:
     repo: https://github.com/sesamemucho/emacs-init
-    dest: /home/bob/.emacs.d
+    dest: '{{ lookup("env", "HOME") }}/.emacs.d'
 
   become: true
   become_user: bob

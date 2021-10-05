@@ -10,6 +10,12 @@ or
 
 ** Usage
 
+Put the appropriate passphrase into the ansible vault password file:
+~/.vault_pass.txt
+
+Make sure group_vars/all.txt has entries for the following variables:
+
+
 Populate `inventory.yml` and run `site.yml`:
 
 ```console

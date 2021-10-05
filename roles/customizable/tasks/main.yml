@@ -17,3 +17,17 @@
     - customizable
     - update
  
+- name: Clone repos from github
+  ansible.builtin.git:
+    repo: "{{ item.repo }}"
+    dest: '{{ lookup("env", "HOME") }}/{{ item.dest }}'
+    key_file: '{{ lookup("env", "HOME") }}/{{ item.key_file }}'
+  loop:
+    "{{ my_github }}"
+
+  when: my_github is defined
+  become: true
+  become_user: "{{ user_name }}"
+
+  tags:
+    - git
