@@ -15,6 +15,25 @@ Put the appropriate passphrase into the ansible vault password file:
 
 Make sure group_vars/all.txt has entries for the following variables:
 
+user_name: your user name
+user_group: your user group
+user_home: Home directory (probably /home/user_name)
+git_user_fullname: 'Full name for git'
+git_user_email: 'email for git'
+
+Put any github repos you want to check out here.
+the 'dest' key indicates the destination directory, starting under
+user_home.
+
+If you don't have any github repos to check out, comment out
+'my_github:' and any following repositories.
+
+my_github:
+  - repo: 'git@github.com:sesamemucho/emacs-init.git'
+    dest: '.emacs.d'
+  - repo: 'git@github.com:sesamemucho/emacs-packages'
+    dest: 'myemacs'
+
 
 Populate `inventory.yml` and run `site.yml`:
 

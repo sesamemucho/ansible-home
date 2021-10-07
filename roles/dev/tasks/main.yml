@@ -120,7 +120,7 @@
       block:
         - name: Make ansible custom-module directory
           ansible.builtin.file:
-            path: '{{ lookup("env", "HOME") }}/.ansible/plugins/modules'
+            path: '{{ user_home }}/.ansible/plugins/modules'
             state: directory
             owner: '{{ user_name }}'
             group: '{{ user_group }}'
@@ -128,7 +128,7 @@
         - name: get aur helper
           ansible.builtin.get_url:
             url: https://raw.githubusercontent.com/kewlfft/ansible-aur/master/plugins/modules/aur.py
-            dest: '{{ lookup("env", "HOME") }}/.ansible/plugins/modules/aur.py'
+            dest: '{{ user_home }}/.ansible/plugins/modules/aur.py'
             mode: '0644'
 
         - name: Make AUR build user

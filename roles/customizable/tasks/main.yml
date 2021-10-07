@@ -20,8 +20,7 @@
 - name: Clone repos from github
   ansible.builtin.git:
     repo: "{{ item.repo }}"
-    dest: '{{ lookup("env", "HOME") }}/{{ item.dest }}'
-    key_file: '{{ lookup("env", "HOME") }}/{{ item.key_file }}'
+    dest: '{{ user_home }}/{{ item.dest }}'
   loop:
     "{{ my_github }}"
 
