@@ -21,6 +21,8 @@
       - ledger
       - cpio
       - inetutils
+      - gimp
+      - inkscape
     extra_args: --noconfirm
     update_cache: yes
 

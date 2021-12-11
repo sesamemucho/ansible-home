@@ -1,19 +1,31 @@
 * ansible-home
 
-Forked from [jsf9k/ansible-arch-install][https://github.com/jsf9k/ansible-arch-install]
+Forked from [[jsf9k/ansible-arch-install][https://github.com/jsf9k/ansible-arch-install]]
 
-Ansible code to configure and maintain my home network.  The code here
-assumes that all devices have been installed via
-[sesamemucho/ansible-arch-install](https://github.com/sesamemucho/ansible-arch-install)
-or
-[jsf9k/ansible-raspi-install](https://github.com/jsf9k/ansible-raspi-install).
+Ansible code to configure and maintain my home Arch Linux computers.
+The code here assumes that all devices have been installed via
+[[https://github.com/sesamemucho/ssmm-ansible-arch-install][sesamemucho/ssmm-ansible-arch-install]] or 
+[[https://github.com/jsf9k/ansible-raspi-install][jsf9k/ansible-raspi-install]].
 
 ** Usage
 
-Put the appropriate passphrase into the ansible vault password file:
-~/.vault_pass.txt
+See [[Example][Example]] for a tutorial-type example session.
 
-Make sure group_vars/all.txt has entries for the following variables:
+If you want to use an encrypted file for the items in
+group_vars/all.txt, then do the next numbered steps:
+
+  0. The ansible.cfg file in the repository sets the default vault
+     password file to "~/.vault_pass.txt".
+
+  1. Put the appropriate passphrase into ~/.vault_pass.txt
+
+  2. For current Arch linux and ansible-vault, you will need something like
+     the following (Arch install has vim and not vi, but ansible-vault
+     expects vi):
+
+  export EDITOR=/usr/bin/vim
+
+Make sure group_vars/all.yml has entries for the following variables:
 
 user_name: your user name
 user_group: your user group
@@ -29,13 +41,13 @@ If you don't have any github repos to check out, comment out
 'my_github:' and any following repositories.
 
 my_github:
-  - repo: 'git@github.com:sesamemucho/emacs-init.git'
+  - repo: 'https://github.com/sesamemucho/emacs-init.git'
     dest: '.emacs.d'
-  - repo: 'git@github.com:sesamemucho/emacs-packages'
+  - repo: 'https://github.com/sesamemucho/emacs-packages'
     dest: 'myemacs'
 
 
-Populate `inventory.yml` and run `site.yml`:
+Run `site.yml`:
 
 ```console
 ansible-playbook -i inventory.yml site.yml
@@ -52,3 +64,82 @@ If you aren't in the United States, you may want to update the
 ** After first install
 
 - Go through and update/add yadm ## tags.
+
+** Example
+
+This example takes you through installing and setting up Arch Linux on
+a VM.
+
+  1. Start with the EFI test VM from
+     [[https://github.com/sesamemucho/ssmm-ansible-arch-install][sesamemucho/ssmm-ansible-arch-install]], but with the following
+     change:
+     When creating the test VM, instead of
+     #+begin_src sh
+     ./do-test-efi.sh
+     #+end_src
+     run
+     #+begin_src sh
+     ./do-test-efi.sh -m 8192 -s 40
+     #+end_src
+
+     To get a VM with 8GB RAM and a 40GB disk, or change these numbers
+     as desired.
+
+  2. Continue the process through step 8. Login as your chosen user
+     name. The initial password is 'password', and you will have to
+     change this immediately.
+
+  3. Create a passphrase file for ansible-vault. If you fork
+     ssm-ansible-arch-install and use it to install a different Arch
+     machine, you'll need to re-enter the passphrase, so keep track of
+     it.
+     #+begin_src sh
+     vim ~/.vault_pass.txt
+     #+end_src
+     and enter the passphrase, and save the file.
+     For hygene, restrict access to the file to only yourself:
+     #+begin_src sh
+     chmod 600 ~/.vault_pass.txt
+     #+end_src
+
+   4. Be able to edit the ansible-vault file:
+      #+begin_src sh
+      export EDITOR=/usr/bin/vim
+      #+end_src
+      Arch install has vim and not vi, but ansible-vault expects vi.
+
+   5. Set up the group_vars/all.yml file:
+      #+begin_src sh
+      ansible-vault create group_vars/all.yml
+      #+end_src
+
+      Set up the following variables:
+      #+BEGIN_EXAMPLE
+      user_name: your current user name
+      user_group: your current user group (will be the same as your
+      user name)
+      user_home: Home directory (probably /home/user_name)
+      git_user_fullname: 'Full name for git'
+      git_user_email: 'email for git'
+      #+END_EXAMPLE
+      
+      If you want to check out any repositories from github, follow
+      the instructions in [[Usage][Usage]], above.
+
+   6. Localization
+      If you aren't in the United States, you may want to update the
+      --country setting in roles/init/tasks/main.yml
+
+   7. Do it
+      #+begin_src sh
+      ansible-playbook -i inventory.yml site.yml
+      #+end_src
+
+   8. Troubleshooting
+      Use "-v" through "-vvvv" after "ansible-playbook" to get more
+      information.
+      After fixing issues, just rerun the ansible-playbook
+      command. One nice thing about Ansible is its idempotency, so you
+      can rerun the command and it will only change the things it
+      needs to.
+

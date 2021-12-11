@@ -66,8 +66,11 @@
       community.general.pacman:
         name:
           - vagrant
+          - net-tools
           - virt-manager
+          - virt-viewer
           - qemu
+          - edk2-ovmf
         extra_args: --noconfirm
 
     - name: Enable service libvirt
@@ -79,13 +82,8 @@
     - name: Add user to libvirt-controlling group
       ansible.builtin.user:
         name: '{{ user_name }}'
-        groups: kvm
+        groups: libvirt
         append: yes
-
-    - name: Set up libvirt authorization
-      ansible.builtin.copy:
-        src: 50-libvirt.rules
-        dest: /etc/polkit-1/rules.d/50-libvirt.rules
 
   become: true
   tags:
